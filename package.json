@@ -1,0 +1,10 @@
+{
+  "name": "MongoGo",
+  "version": "0.0.1",
+  "main": "main.js",
+  "dependencies": {
+    "koa": "^1.2.0",
+    "koa-static": "^2.0.0",
+    "mongoose": "^4.5.4"
+  }
+}
