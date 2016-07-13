@@ -22,11 +22,18 @@ div.fields_container {
 }
 
 div.exec_container {
-    height: 20%;
+    height: 15%;
 }
 
 div.item_list_container {
     height: 80%;
+}
+
+div.query_options_container {
+    height: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 div.bottom_info_container {
