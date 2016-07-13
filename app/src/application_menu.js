@@ -3,6 +3,8 @@
  */
 const {remote}= require('electron');
 const Menu = remote.Menu;
+const {ipcRenderer} = require('electron');
+
 var template = [
     {
         label: '链接',
@@ -11,7 +13,7 @@ var template = [
                 label: '新建连接',
                 accelerator: 'CmdOrCtrl+N',
                 click: function (item, focusedWindow) {
-                    createNewLink();
+                    createNewLinkDialog();
                 }
             },
             {
@@ -161,10 +163,41 @@ if (process.platform == 'darwin') {
     );
 }
 
-function createNewLink() {
+function createNewLinkDialog() {
     console.log('createNewLink');
     $('#new_link_dialog').modal({});
 }
+
+function createNewLink() {
+    var url = $('#mongodb_url').val();
+    var ipAddress = url.split(':')[0];
+    var port = url.split('/')[0].split(':')[1];
+    var databaseName = url.split('/')[1];
+    ipcRenderer.send('create_new_link', {ipAddress: ipAddress, port: port, databaseName: databaseName});
+}
+
+function createSelectDatabaseDialog(arg) {
+    console.dir(arg);
+    vm.databases = arg.dbs.databases;
+    vm.url = arg.url;
+    $('#new_link_dialog').modal('hide');
+    $('#select_database_dialog').modal({});
+}
+
+function selectDatabase() {
+    var databaseName = $('input:radio[name="databases"]:checked ').val();
+    ipcRenderer.send('create_new_link', {ipAddress: vm.url.ipAddress, port: vm.url.port, databaseName: databaseName});
+}
+
+ipcRenderer.on('collection_list_steaming', (event, arg) => {
+    vm.collections = arg;
+    $('#new_link_dialog').modal('hide');
+    $('#select_database_dialog').modal('hide');
+});
+
+ipcRenderer.on('database_list_steaming', (event, arg)=> {
+    createSelectDatabaseDialog(arg);
+});
 
 var menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);

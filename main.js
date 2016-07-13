@@ -57,7 +57,7 @@ var mongoService = require('./service/MongoService');
 
 const {ipcMain} = require('electron');
 // const {ipcRenderer} = require('electron');
-// var MongoClient = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient;
 // // Connection ur
 // var url = 'mongodb://localhost:27017';
 // Connect using MongoClient
@@ -75,16 +75,29 @@ db.open(function (err, db) {
     db.close();
 });
 
-ipcMain.on('fetch_collection_list', (event, arg) => {
-    var db = new Db('kcyp', new Mongos([server]));
-    db.open(function (err, db) {
-        // Get an additional db
-        db.listCollections().toArray(function (err, items) {
-            event.sender.send('collection_list_steaming', items);
+ipcMain.on('create_new_link', (event, arg) => {
+    console.dir(arg);
+    var server = new Server(arg.ipAddress, arg.port);
+    if (arg.databaseName) {
+        var db = new Db(arg.databaseName, new Mongos([server]));
+        db.open(function (err, db) {
+            // Get an additional db
+            db.listCollections().toArray(function (err, items) {
+                event.sender.send('collection_list_steaming', items);
+                db.close();
+            });
             db.close();
         });
-        db.close();
-    });
+    } else {
+        console.log('mongodb://' + arg.ipAddress + ':' + arg.port);
+        MongoClient.connect('mongodb://' + arg.ipAddress + ':' + arg.port, function (err, db) {
+            var adminDb = db.admin();
+            adminDb.listDatabases(function (err, dbs) {
+                event.sender.send('database_list_steaming', {dbs: dbs, url: arg});
+                db.close();
+            });
+        });
+    }
 });
 
 // MongoClient.connect(url, function (err, db) {
