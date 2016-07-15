@@ -85,17 +85,20 @@
         </div>
         <div class="fields_container">
             <div class="exec_container">
-                <h1>exec</h1>
+                <span class="glyphicon glyphicon-console exec_input" aria-hidden="true">
+                </span>
+                <textarea class="exec_input"></textarea>
+
             </div>
             <div class="item_list_container" style="overflow:auto">
                 <table style="width: auto" class="table table-bordered">
-                    <tr>
+                    <tr id="th">
                         <th v-for="key in trList">
                             {{key}}
                         </th>
                     </tr>
                     <tr v-for="field in fields">
-                        <td v-for="key in trList"
+                        <td v-for="key in trList" @dblclick="onTdDoubleClick(field[key],$event)"
                             style="max-width: 200px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                             {{field[key]}}
                         </td>

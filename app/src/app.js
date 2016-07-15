@@ -18,6 +18,17 @@ const vm = new Vue({
                 this.trList = [];
             }
             ipcRenderer.send('fetch_collection_data', {collectionName: collectionName});
+        },
+        onTdDoubleClick: function (arg1, arg2) {
+            var element = $(arg2.currentTarget);
+            var value = element.html();
+            console.log(value);
+            element.text('');
+            console.dir(value);
+            $("<input value=\'" + value + "\'>").appendTo(element);
+            if (typeof arg1 == 'object') {
+                console.log('fuck obj');
+            }
         }
     }
 });
@@ -51,3 +62,34 @@ function mergeHeaders(fields) {
     console.dir(vm.trList);
 }
 
+
+function getElementAbsolutePositionX(obj) {
+    var currentLeft = 0;
+
+    if (obj.offsetParent) {
+        while (obj.offsetParent) {
+            currentLeft += obj.offsetLeft;
+            obj = obj.offsetParent;
+        }
+    } else if (obj.x) currentLeft += obj.x;
+    return currentLeft;
+}
+
+function getElementAbsolutePositionY(obj) {
+    var currentTop = 0;
+
+    if (obj.offsetParent) {
+        while (obj.offsetParent) {
+            currentTop += obj.offsetTop;
+            obj = obj.offsetParent;
+        }
+    } else if (obj.y) currentTop += obj.y;
+    return currentTop;
+}
+
+function getElementAbsolutePosition(element) {
+    return {
+        x: getElementAbsolutePositionX(element),
+        y: getElementAbsolutePositionY(element)
+    };
+}

@@ -109,13 +109,6 @@ ipcMain.on('fetch_collection_data', (event, arg)=> {
     });
 });
 
-// MongoClient.connect(url, function (err, db) {
-//     var adminDb = db.admin();
-//     adminDb.listDatabases(function (err, dbs) {
-//         db.close();
-//     });
-// });
-
 
 staticServer.use(serve('./app'));
 staticServer.use(serve('./lib'));
