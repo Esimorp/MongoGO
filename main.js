@@ -13,7 +13,7 @@ function createWindow() {
     win = new BrowserWindow({width: 800, height: 600});
 
     // and load the index.html of the app.
-    win.loadURL(`http://localhost:4000/index.html`);
+    win.loadURL(`http://localhost:8989/`);
 
     // Open the DevTools.
     win.webContents.openDevTools();
@@ -50,10 +50,10 @@ app.on('activate', () => {
 });
 
 
-var serve = require('koa-static');
-var koa = require('koa');
-var staticServer = koa();
-var mongoService = require('./service/MongoService');
+// var serve = require('koa-static');
+// var koa = require('koa');
+// var staticServer = koa();
+// var mongoService = require('./service/MongoService');
 
 const {ipcMain} = require('electron');
 // const {ipcRenderer} = require('electron');
@@ -110,7 +110,7 @@ ipcMain.on('fetch_collection_data', (event, arg)=> {
 });
 
 
-staticServer.use(serve('./app'));
-staticServer.use(serve('./lib'));
-
-staticServer.listen(4000);
+// staticServer.use(serve('./app'));
+// staticServer.use(serve('./lib'));
+//
+// staticServer.listen(4000);
