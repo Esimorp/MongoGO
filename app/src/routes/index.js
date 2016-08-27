@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router';
-import App from '../components/App';
-import NotFound from '../components/NotFound';
+import React, {PropTypes} from "react";
+import {Router, Route} from "react-router";
+import App from "../components/App";
+import NotFound from "../components/NotFound";
 
-const Routes = ({ history }) =>
+const Routes = ({history}) =>
   <Router history={history}>
-    <Route path="/" component={App} />
-    <Route path="/actived" component={App} />
-    <Route path="/completed" component={App} />
+    <Route path="/" component={App}/>
+    <Route path="/actived" component={App}/>
+    <Route path="/completed" component={App}/>
     <Route path="*" component={NotFound}/>
   </Router>;
 
