@@ -10,7 +10,7 @@ class DataContainer extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        // console.dir(ipcRenderer);
+        this.state = {tabs: ['1', '2', '3']}
     }
 
     callback(key) {
@@ -20,9 +20,10 @@ class DataContainer extends React.Component {
     render() {
         return (
             <Tabs defaultActiveKey="1" onChange={this.callback}>
-                <TabPane tab="选项卡一" key="1">选项卡一内容</TabPane>
-                <TabPane tab="选项卡二" key="2">选项卡二内容</TabPane>
-                <TabPane tab="选项卡三" key="3">选项卡三内容</TabPane>
+                {this.state.tabs.map((i, m)=> {
+                        return <TabPane tab="选项卡一" key={i}>选项卡一内容</TabPane>
+                    }
+                )}
             </Tabs>)
     }
 }
