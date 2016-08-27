@@ -2,12 +2,10 @@
  * Created by Esimorp on 16/8/27.
  */
 import React from "react";
-import TreeData from "./TreeData";
-import RowData from "./RowData";
-import JsonData from "./JsonData";
 import {connect} from "react-redux";
+import {Tabs} from "antd";
 // const ipcRenderer = window.require('electron').ipcRenderer;
-
+const TabPane = Tabs.TabPane;
 class DataContainer extends React.Component {
 
   constructor(props, context) {
@@ -15,23 +13,17 @@ class DataContainer extends React.Component {
     // console.dir(ipcRenderer);
   }
 
-  render() {
-    console.dir(this.props);
-    let viewType = this.props.params.view;
-    let data = this.props.data;
-    switch (viewType) {
-      case 'tree':
-        return <TreeData data={data}/>;
-        break;
-      case 'row':
-        return <RowData data={data}/>;
-        break;
-      case 'json':
-        return <JsonData data={data}/>;
-      default:
-        return <h1>Not Found</h1>;
-    }
+  callback(key) {
+    console.log(key);
+  }
 
+  render() {
+    return (
+      <Tabs defaultActiveKey="1" onChange={this.callback}>
+        <TabPane tab="选项卡一" key="1">选项卡一内容</TabPane>
+        <TabPane tab="选项卡二" key="2">选项卡二内容</TabPane>
+        <TabPane tab="选项卡三" key="3">选项卡三内容</TabPane>
+      </Tabs>)
   }
 }
 
