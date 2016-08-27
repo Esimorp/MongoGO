@@ -3,23 +3,25 @@ import {Row, Col} from "antd";
 import Left_Nav from "../../components/Collection/Left_Nav";
 import styles from "./MainLayout.less";
 import Query from "../../components/Query/Query";
-import Data from "../../components/Data";
+import {Link} from "react-router";
 
 const MainLayout = ({children}) => {
   return (
     <div className={styles.normal}>
-      <Row style={{height:'100vh'}}>
-        <Col span={4}><Left_Nav></Left_Nav></Col>
+      <Row style={{height: '100vh'}}>
+        <Col span={4}>
+          <Left_Nav></Left_Nav>
+          <Link to="/kcyp/tree" onlyActiveOnIndex={true}>Data</Link>
+        </Col>
         <Col span={20} className={styles.normal}>
           <Query></Query>
-          <Data></Data></Col>
+          {children}
+        </Col>
       </Row>
     </div>
   );
 };
 
-MainLayout.propTypes = {
-  children: PropTypes.element.isRequired,
-};
+MainLayout.propTypes = {};
 
 export default MainLayout;

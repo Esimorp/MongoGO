@@ -6,25 +6,31 @@ import TreeData from "./TreeData";
 import RowData from "./RowData";
 import JsonData from "./JsonData";
 import {connect} from "react-redux";
+// const ipcRenderer = window.require('electron').ipcRenderer;
+
 class DataContainer extends React.Component {
 
   constructor(props, context) {
     super(props, context);
+    // console.dir(ipcRenderer);
   }
 
   render() {
-    let viewType = this.props.view;
+    console.dir(this.props);
+    let viewType = this.props.params.view;
     let data = this.props.data;
     let dataView;
     switch (viewType) {
       case 'tree':
-        dataView = <TreeData data={data}/>;
+        return <TreeData data={data}/>;
         break;
       case 'row':
-        dataView = <RowData data={data}/>;
+        return <RowData data={data}/>;
         break;
       case 'json':
-        dataView = <JsonData data={data}/>;
+        return <JsonData data={data}/>;
+      default:
+        return <h1>Not Found</h1>;
     }
 
     return (
