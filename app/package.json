@@ -40,9 +40,6 @@
     "pre-commit": "1.x",
     "redbox-react": "^1.2.2"
   },
-  "pre-commit": [
-    "lint"
-  ],
   "scripts": {
     "build": "atool-build",
     "lint": "eslint --ext .js,.jsx src/",
