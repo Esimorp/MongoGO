@@ -5,6 +5,7 @@ import React from "react";
 import TreeData from "./TreeData";
 import RowData from "./RowData";
 import JsonData from "./JsonData";
+import {connect} from "react-redux";
 class DataContainer extends React.Component {
 
   constructor(props, context) {
@@ -32,4 +33,4 @@ class DataContainer extends React.Component {
   }
 }
 
-export default DataContainer;
+export default connect(()=>({}))(DataContainer);
