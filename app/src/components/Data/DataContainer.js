@@ -19,7 +19,6 @@ class DataContainer extends React.Component {
     console.dir(this.props);
     let viewType = this.props.params.view;
     let data = this.props.data;
-    let dataView;
     switch (viewType) {
       case 'tree':
         return <TreeData data={data}/>;
@@ -33,9 +32,6 @@ class DataContainer extends React.Component {
         return <h1>Not Found</h1>;
     }
 
-    return (
-    {dataView}
-    )
   }
 }
 
