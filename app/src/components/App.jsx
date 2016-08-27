@@ -3,20 +3,20 @@ import {connect} from "react-redux";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 
 const App = ({location, dispatch, children}) => {
-  return (
-    <MainLayout>
-      {children}
-    </MainLayout>
-  );
+    return (
+        <MainLayout>
+            {children}
+        </MainLayout>
+    );
 };
 
 App.propTypes = {};
 
 function select(state) {
-  return {
-    a: state.a,
-    b: state.b
-  }
+    return {
+        a: state.a,
+        b: state.b
+    }
 }
 
 

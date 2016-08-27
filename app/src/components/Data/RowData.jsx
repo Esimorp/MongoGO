@@ -4,15 +4,15 @@
 import React from "react";
 class RowData extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-  }
+    constructor(props, context) {
+        super(props, context);
+    }
 
-  render() {
-    return (
-      <h1>RowData</h1>
-    )
-  }
+    render() {
+        return (
+            <h1>RowData</h1>
+        )
+    }
 }
 
 

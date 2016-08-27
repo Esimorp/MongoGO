@@ -4,15 +4,15 @@
 import React from "react";
 class TreeData extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-  }
+    constructor(props, context) {
+        super(props, context);
+    }
 
-  render() {
-    return (
-      <h1>TreeData</h1>
-    )
-  }
+    render() {
+        return (
+            <h1>TreeData</h1>
+        )
+    }
 }
 
 export default TreeData;
