@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Tree} from "antd";
+import {Tree, Spin} from "antd";
 const TreeNode = Tree.TreeNode;
 
 class Collections extends Component {
@@ -18,8 +18,8 @@ class Collections extends Component {
         this.ipcRenderer.on('databases_streaming', function (event, arg) {
             console.log(arg);
         });
-        this.ipcRenderer.send('fetch_collections');
-        this.ipcRenderer.send('fetch_databases');
+        // this.ipcRenderer.send('fetch_collections');
+        // this.ipcRenderer.send('fetch_databases');
     }
 
     componentDidMount() {
@@ -44,9 +44,11 @@ class Collections extends Component {
         });
         const treeNodes = loop(this.state.treeData);
         return (
-            <Tree>
-                {treeNodes}
-            </Tree>
+            <div>
+                <Tree>
+                    {treeNodes}
+                </Tree>
+            </div>
         );
     }
 }

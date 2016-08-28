@@ -66,36 +66,39 @@ var Db = require('mongodb').Db,
     Server = require('mongodb').Server;
 var server = new Server('localhost', 27017);
 var db = new Db('kcyp', new Mongos([server]));
-db.open(function (err, db) {
-    // Get an additional db
+
+ipcMain.on('app_created', (event, arg)=> {
+    db.open(function (err, db) {
+        event.sender.send('databases_connected');
+    });
 });
 
 
 var connectedDb;
 
-ipcMain.on('create_new_link', (event, arg) => {
-    console.dir(arg);
-    var server = new Server(arg.ipAddress, arg.port);
-    if (arg.databaseName) {
-        var db = new Db(arg.databaseName, new Mongos([server]));
-        db.open(function (err, db) {
-            connectedDb = db;
-            // Get an additional db
-            db.listCollections().toArray(function (err, items) {
-                event.sender.send('collection_list_steaming', items);
-            });
-        });
-    } else {
-        console.log('mongodb://' + arg.ipAddress + ':' + arg.port);
-        MongoClient.connect('mongodb://' + arg.ipAddress + ':' + arg.port, function (err, db) {
-            connectedDb = db;
-            var adminDb = db.admin();
-            adminDb.listDatabases(function (err, dbs) {
-                event.sender.send('database_list_steaming', {dbs: dbs, url: arg});
-            });
-        });
-    }
-});
+// ipcMain.on('create_new_link', (event, arg) => {
+//     console.dir(arg);
+//     var server = new Server(arg.ipAddress, arg.port);
+//     if (arg.databaseName) {
+//         var db = new Db(arg.databaseName, new Mongos([server]));
+//         db.open(function (err, db) {
+//             connectedDb = db;
+//             // Get an additional db
+//             db.listCollections().toArray(function (err, items) {
+//                 event.sender.send('collection_list_steaming', items);
+//             });
+//         });
+//     } else {
+//         console.log('mongodb://' + arg.ipAddress + ':' + arg.port);
+//         MongoClient.connect('mongodb://' + arg.ipAddress + ':' + arg.port, function (err, db) {
+//             connectedDb = db;
+//             var adminDb = db.admin();
+//             adminDb.listDatabases(function (err, dbs) {
+//                 event.sender.send('database_list_steaming', {dbs: dbs, url: arg});
+//             });
+//         });
+//     }
+// });
 
 ipcMain.on('fetch_collections', (event, arg)=> {
     console.dir(event);
