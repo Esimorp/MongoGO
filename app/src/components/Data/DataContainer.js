@@ -36,6 +36,30 @@ class DataContainer extends React.Component {
         this.setState({...this.state, activeKey: key});
     }
 
+    onEdit(targetKey, action) {
+        console.log(action);
+        this[action](targetKey);
+    }
+
+    remove(targetKey) {
+        console.log(targetKey);
+        let collections = this.state.collections;
+        delete collections[targetKey];
+        this.setState({...this.state, collections: collections});
+        // let activeKey = this.state.activeKey;
+        // let lastIndex;
+        // this.state.panes.forEach((pane, i) => {
+        //     if (pane.key === targetKey) {
+        //         lastIndex = i - 1;
+        //     }
+        // });
+        // const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+        // if (lastIndex >= 0 && activeKey === targetKey) {
+        //     activeKey = panes[lastIndex].key;
+        // }
+        // this.setState({panes, activeKey});
+    }
+
     render() {
         let collections = [];
 
@@ -45,7 +69,8 @@ class DataContainer extends React.Component {
                                           key={collectionName}>content</TabPane>)
         }
         return (
-            <Tabs activeKey={this.state.activeKey} type="editable-card" onChange={this.callback}>
+            <Tabs activeKey={this.state.activeKey} onEdit={this.onEdit.bind(this)} type="editable-card"
+                  onChange={this.callback}>
                 {collections}
             </Tabs>)
     }
