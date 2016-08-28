@@ -14,8 +14,12 @@ class Collections extends Component {
         this.ipcRenderer.on('collections_streaming', function (event, arg) {
             console.log(arg);
         });
-        console.log('asdad');
+
+        this.ipcRenderer.on('databases_streaming', function (event, arg) {
+            console.log(arg);
+        });
         this.ipcRenderer.send('fetch_collections');
+        this.ipcRenderer.send('fetch_databases');
     }
 
     componentDidMount() {

@@ -68,11 +68,6 @@ var server = new Server('localhost', 27017);
 var db = new Db('kcyp', new Mongos([server]));
 db.open(function (err, db) {
     // Get an additional db
-    db.listCollections().toArray(function (err, items) {
-        // ipcRenderer.sendSync('collection_list', items);
-        db.close();
-    });
-    db.close();
 });
 
 
@@ -106,6 +101,15 @@ ipcMain.on('fetch_collections', (event, arg)=> {
     console.dir(event);
     console.dir(arg);
     event.sender.send('collections_streaming', 'hello react~');
+});
+
+ipcMain.on('fetch_databases', (event, arg)=> {
+    db.listCollections().toArray(function (err, items) {
+        console.dir(err);
+        console.dir(items);
+        event.sender.send('databases_streaming', items);
+        db.close();
+    });
 });
 
 ipcMain.on('fetch_collection_data', (event, arg)=> {
