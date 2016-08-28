@@ -14,22 +14,21 @@ class DataContainer extends React.Component {
     }
 
     componentDidMount() {
-        let collections = {};
-        collections[this.props.params.collection] = {view: 'json'};
-        this.setState({...this.state, collections: collections, activeKey: this.props.params.collection});
+        this.addTabOrChangeActiveKey(this.props.params.collection);
     }
 
     componentWillReceiveProps(newProps) {
-        console.log('componentWillReceiveProps');
-        console.log(this.props.params.collection);
-        if (!this.state.collections[newProps.params.collection]) {
-            let collections = {...this.state.collections};
-            collections[newProps.params.collection] = {view: 'json'};
-            this.setState({...this.state, activeKey: newProps.params.collection, collections: collections});
-        } else {
-            this.setState({...this.state, activeKey: newProps.params.collection});
-        }
+        this.addTabOrChangeActiveKey(newProps.params.collection)
+    }
 
+    addTabOrChangeActiveKey(targetKey) {
+        if (!this.state.collections[targetKey]) {
+            let collections = {...this.state.collections};
+            collections[targetKey] = {view: 'json'};
+            this.setState({...this.state, activeKey: targetKey, collections: collections});
+        } else {
+            this.setState({...this.state, activeKey: targetKey});
+        }
     }
 
     callback(key) {
@@ -37,7 +36,6 @@ class DataContainer extends React.Component {
     }
 
     onEdit(targetKey, action) {
-        console.log(action);
         this[action](targetKey);
     }
 
@@ -46,18 +44,6 @@ class DataContainer extends React.Component {
         let collections = this.state.collections;
         delete collections[targetKey];
         this.setState({...this.state, collections: collections});
-        // let activeKey = this.state.activeKey;
-        // let lastIndex;
-        // this.state.panes.forEach((pane, i) => {
-        //     if (pane.key === targetKey) {
-        //         lastIndex = i - 1;
-        //     }
-        // });
-        // const panes = this.state.panes.filter(pane => pane.key !== targetKey);
-        // if (lastIndex >= 0 && activeKey === targetKey) {
-        //     activeKey = panes[lastIndex].key;
-        // }
-        // this.setState({panes, activeKey});
     }
 
     render() {
@@ -70,7 +56,7 @@ class DataContainer extends React.Component {
         }
         return (
             <Tabs activeKey={this.state.activeKey} onEdit={this.onEdit.bind(this)} type="editable-card"
-                  onChange={this.callback}>
+                  onChange={this.callback.bind(this)}>
                 {collections}
             </Tabs>)
     }
