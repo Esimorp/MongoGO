@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Tree, Spin} from "antd";
+import {connect} from "react-redux";
 const TreeNode = Tree.TreeNode;
 
 class Collections extends Component {
@@ -15,10 +16,6 @@ class Collections extends Component {
             console.log(arg);
         });
 
-        this.ipcRenderer.on('databases_streaming', function (event, arg) {
-            console.log(arg);
-        });
-        // this.ipcRenderer.send('fetch_collections');
         // this.ipcRenderer.send('fetch_databases');
     }
 
@@ -34,6 +31,12 @@ class Collections extends Component {
         });
     };
 
+    componentWillReceiveProps(newProps) {
+        if (newProps.databases.connected === true) {
+            console.log('connected');
+            this.ipcRenderer.send('fetch_collections');
+        }
+    }
 
     render() {
         const loop = data => data.map((item) => {
@@ -54,4 +57,6 @@ class Collections extends Component {
 }
 
 
-export default Collections;
+export default connect((store)=> {
+    return {databases: store.database}
+})(Collections);

@@ -4,6 +4,7 @@ import Collections from "../../components/Collection/Collections";
 import styles from "./MainLayout.less";
 import Query from "../../components/Query/Query";
 import {Link} from "react-router";
+import {connect} from "react-redux";
 
 class MainLayout extends Component {
     ipcRenderer = window.require('electron').ipcRenderer;
@@ -11,11 +12,16 @@ class MainLayout extends Component {
     constructor() {
         super();
         this.state = {loading: true};
+    }
+
+    componentDidMount() {
         this.ipcRenderer.send('app_created');
 
+        const {dispatch} = this.props;
         this.ipcRenderer.on('databases_connected', (args)=> {
             console.dir(args);
             this.setState({loading: false});
+            dispatch({type: 'databases/connected'});
         });
     }
 
@@ -43,4 +49,4 @@ class MainLayout extends Component {
 
 MainLayout.propTypes = {};
 
-export default MainLayout;
+export default connect(()=>({}))(MainLayout);

@@ -101,17 +101,14 @@ var connectedDb;
 // });
 
 ipcMain.on('fetch_collections', (event, arg)=> {
-    console.dir(event);
-    console.dir(arg);
-    event.sender.send('collections_streaming', 'hello react~');
+    db.listCollections().toArray(function (err, items) {
+        event.sender.send('collections_streaming', items);
+    });
 });
 
 ipcMain.on('fetch_databases', (event, arg)=> {
     db.listCollections().toArray(function (err, items) {
-        console.dir(err);
-        console.dir(items);
         event.sender.send('databases_streaming', items);
-        db.close();
     });
 });
 
