@@ -10,13 +10,13 @@ class DataContainer extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {collections: {}}
+        this.state = {collections: {}, activeKey: ''}
     }
 
     componentDidMount() {
         let collections = {};
         collections[this.props.params.collection] = {view: 'json'};
-        this.setState({...this.state, collections: collections});
+        this.setState({...this.state, collections: collections, activeKey: this.props.params.collection});
     }
 
     componentWillReceiveProps(newProps) {
@@ -25,22 +25,27 @@ class DataContainer extends React.Component {
         if (!this.state.collections[newProps.params.collection]) {
             let collections = {...this.state.collections};
             collections[newProps.params.collection] = {view: 'json'};
-            this.setState({...this.state, collections: collections});
+            this.setState({...this.state, activeKey: newProps.params.collection, collections: collections});
+        } else {
+            this.setState({...this.state, activeKey: newProps.params.collection});
         }
+
     }
 
     callback(key) {
-
+        this.setState({...this.state, activeKey: key});
     }
 
     render() {
         let collections = [];
 
         for (let collectionName in this.state.collections) {
-            collections.push(<TabPane tab={collectionName} key={collectionName}>content</TabPane>)
+            if (this.state.collections.hasOwnProperty(collectionName))
+                collections.push(<TabPane tab={collectionName}
+                                          key={collectionName}>content</TabPane>)
         }
         return (
-            <Tabs defaultActiveKey="1" onChange={this.callback}>
+            <Tabs activeKey={this.state.activeKey} type="editable-card" onChange={this.callback}>
                 {collections}
             </Tabs>)
     }
