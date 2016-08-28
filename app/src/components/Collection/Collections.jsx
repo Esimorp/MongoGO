@@ -16,7 +16,6 @@ class Collections extends Component {
             console.log(arg);
         });
 
-        // this.ipcRenderer.send('fetch_databases');
     }
 
     componentDidMount() {
@@ -34,7 +33,7 @@ class Collections extends Component {
     componentWillReceiveProps(newProps) {
         if (newProps.databases.connected === true) {
             console.log('connected');
-            this.ipcRenderer.send('fetch_collections');
+            this.ipcRenderer.send('fetch_databases');
         }
     }
 
