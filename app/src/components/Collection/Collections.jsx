@@ -3,14 +3,24 @@ import {Tree} from "antd";
 const TreeNode = Tree.TreeNode;
 
 class Collections extends Component {
+    ipcRenderer = window.require('electron').ipcRenderer;
 
     constructor(props) {
         super(props);
         this.state = {treeData: []};
     }
 
+    componentWillMount() {
+        this.ipcRenderer.on('collections_streaming', function (event, arg) {
+            console.log(arg);
+        });
+        console.log('asdad');
+        this.ipcRenderer.send('fetch_collections');
+    }
+
     componentDidMount() {
         console.log('mount');
+
         this.setState({
             treeData: [
                 {name: 'pNode 01', key: '0-0'},

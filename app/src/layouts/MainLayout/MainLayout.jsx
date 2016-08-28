@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from "react";
 import {Row, Col} from "antd";
-import Left_Nav from "../../components/Collection/Left_Nav";
+import Collections from "../../components/Collection/Collections";
 import styles from "./MainLayout.less";
 import Query from "../../components/Query/Query";
 import {Link} from "react-router";
@@ -10,7 +10,7 @@ const MainLayout = ({children}) => {
         <div className={styles.normal}>
             <Row style={{height: '100vh'}}>
                 <Col span={4}>
-                    <Left_Nav></Left_Nav>
+                    <Collections></Collections>
                     <Link to="/explore/alskdjalsd/asdasd" onlyActiveOnIndex={true}>Data</Link>
                     <Link to="/explore/asdad/asd" onlyActiveOnIndex={true}>DataDDD</Link>
                 </Col>

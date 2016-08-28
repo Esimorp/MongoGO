@@ -13,7 +13,7 @@ function createWindow() {
     win = new BrowserWindow({width: 800, height: 600});
 
     // and load the index.html of the app.
-    win.loadURL(`http://localhost:8989/`);
+    win.loadURL('http://localhost:8989');
 
     // Open the DevTools.
     win.webContents.openDevTools();
@@ -100,6 +100,12 @@ ipcMain.on('create_new_link', (event, arg) => {
             });
         });
     }
+});
+
+ipcMain.on('fetch_collections', (event, arg)=> {
+    console.dir(event);
+    console.dir(arg);
+    event.sender.send('collections_streaming', 'hello react~');
 });
 
 ipcMain.on('fetch_collection_data', (event, arg)=> {
