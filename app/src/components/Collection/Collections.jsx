@@ -13,22 +13,23 @@ class Collections extends Component {
 
     componentDidMount() {
         console.log('mount');
-
+        let self = this;
         this.ipcRenderer.on('databases_streaming', function (event, arg) {
-            console.log(arg);
+            console.dir(arg);
+            let databases = [];
+            for (let database of arg.databases) {
+                databases.push({name: database.name, key: database.name});
+            }
+            self.setState({
+                treeData: databases,
+            });
         });
 
         this.ipcRenderer.on('collections_streaming', function (event, arg) {
             console.log(arg);
         });
 
-        this.setState({
-            treeData: [
-                {name: 'pNode 01', key: '0-0'},
-                {name: 'pNode 02', key: '0-1'},
-                {name: 'pNode 03', key: '0-2', isLeaf: true},
-            ],
-        });
+
     };
 
     componentWillReceiveProps(newProps) {

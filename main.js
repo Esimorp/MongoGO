@@ -67,14 +67,15 @@ var Db = require('mongodb').Db,
 var server = new Server('localhost', 27017);
 var db = new Db('kcyp', new Mongos([server]));
 
+var connectedDb;
+
 ipcMain.on('app_created', (event, arg)=> {
     db.open(function (err, db) {
+        connectedDb = db;
         event.sender.send('databases_connected');
     });
 });
 
-
-var connectedDb;
 
 // ipcMain.on('create_new_link', (event, arg) => {
 //     console.dir(arg);
@@ -101,14 +102,16 @@ var connectedDb;
 // });
 
 ipcMain.on('fetch_collections', (event, arg)=> {
-    db.listCollections().toArray(function (err, items) {
+    connectedDb.listCollections().toArray(function (err, items) {
         event.sender.send('collections_streaming', items);
     });
 });
 
 ipcMain.on('fetch_databases', (event, arg)=> {
-    db.listCollections().toArray(function (err, items) {
-        event.sender.send('databases_streaming', items);
+    var adminDb = db.admin();
+    adminDb.listDatabases(function (err, dbs) {
+        // event.sender.send('database_list_steaming', {dbs: dbs, url: arg});
+        event.sender.send('databases_streaming', dbs);
     });
 });
 
