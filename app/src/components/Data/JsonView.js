@@ -10,7 +10,7 @@ class JsonView extends React.Component {
 
     render() {
         return (
-            <h1>TreeData</h1>
+            <h1>JsonData</h1>
         )
     }
 }
