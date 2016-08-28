@@ -4,8 +4,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Tabs} from "antd";
+import DataViewWrapper from "./DataViewWrapper";
 // const ipcRenderer = window.require('electron').ipcRenderer;
 const TabPane = Tabs.TabPane;
+
 class DataContainer extends React.Component {
 
     constructor(props, context) {
@@ -52,7 +54,8 @@ class DataContainer extends React.Component {
         for (let collectionName in this.state.collections) {
             if (this.state.collections.hasOwnProperty(collectionName))
                 collections.push(<TabPane tab={collectionName}
-                                          key={collectionName}>content</TabPane>)
+                                          key={collectionName}><DataViewWrapper collectionName={collectionName}
+                                                                                viewMode={this.state.collections[collectionName].view}/></TabPane>)
         }
         return (
             <Tabs hideAdd activeKey={this.state.activeKey} onEdit={this.onEdit.bind(this)} type="editable-card"

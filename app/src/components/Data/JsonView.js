@@ -2,7 +2,7 @@
  * Created by Esimorp on 16/8/27.
  */
 import React from "react";
-class RowData extends React.Component {
+class JsonView extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -10,10 +10,9 @@ class RowData extends React.Component {
 
     render() {
         return (
-            <h1>RowData</h1>
+            <h1>TreeData</h1>
         )
     }
 }
 
-
-export default RowData;
+export default JsonView;

@@ -2,7 +2,7 @@
  * Created by Esimorp on 16/8/27.
  */
 import React from "react";
-class JsonData extends React.Component {
+class TreeView extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -15,4 +15,4 @@ class JsonData extends React.Component {
     }
 }
 
-export default JsonData;
+export default TreeView;
