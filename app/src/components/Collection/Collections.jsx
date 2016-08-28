@@ -11,15 +11,16 @@ class Collections extends Component {
         this.state = {treeData: []};
     }
 
-    componentWillMount() {
-        this.ipcRenderer.on('collections_streaming', function (event, arg) {
+    componentDidMount() {
+        console.log('mount');
+
+        this.ipcRenderer.on('databases_streaming', function (event, arg) {
             console.log(arg);
         });
 
-    }
-
-    componentDidMount() {
-        console.log('mount');
+        this.ipcRenderer.on('collections_streaming', function (event, arg) {
+            console.log(arg);
+        });
 
         this.setState({
             treeData: [
