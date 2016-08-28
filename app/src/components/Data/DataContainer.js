@@ -55,7 +55,7 @@ class DataContainer extends React.Component {
                                           key={collectionName}>content</TabPane>)
         }
         return (
-            <Tabs activeKey={this.state.activeKey} onEdit={this.onEdit.bind(this)} type="editable-card"
+            <Tabs hideAdd activeKey={this.state.activeKey} onEdit={this.onEdit.bind(this)} type="editable-card"
                   onChange={this.callback.bind(this)}>
                 {collections}
             </Tabs>)
