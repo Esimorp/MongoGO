@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Tree} from "antd";
 const TreeNode = Tree.TreeNode;
 
-class Left_Nav extends Component {
+class Collections extends Component {
 
     constructor(props) {
         super(props);
@@ -38,4 +38,4 @@ class Left_Nav extends Component {
 }
 
 
-export default Left_Nav;
+export default Collections;
