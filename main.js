@@ -65,11 +65,11 @@ var Db = require('mongodb').Db,
     Mongos = require('mongodb').Mongos,
     Server = require('mongodb').Server;
 var server = new Server('localhost', 27017);
-var db = new Db('kcyp', new Mongos([server]));
 
 var connectedDb;
 
 ipcMain.on('app_created', (event, arg)=> {
+    var db = new Db('kcyp', new Mongos([server]));
     db.open(function (err, db) {
         connectedDb = db;
         event.sender.send('databases_connected');
@@ -102,13 +102,19 @@ ipcMain.on('app_created', (event, arg)=> {
 // });
 
 ipcMain.on('fetch_collections', (event, arg)=> {
-    connectedDb.listCollections().toArray(function (err, items) {
-        event.sender.send('collections_streaming', items);
+    console.log('fetch_collections');
+    var db = new Db(arg, new Mongos([server]));
+    db.open(function (err, db) {
+        connectedDb = db;
+        // Get an additional db
+        db.listCollections().toArray(function (err, items) {
+            event.sender.send('collections_streaming', items);
+        });
     });
 });
 
 ipcMain.on('fetch_databases', (event, arg)=> {
-    var adminDb = db.admin();
+    var adminDb = connectedDb.admin();
     adminDb.listDatabases(function (err, dbs) {
         // event.sender.send('database_list_steaming', {dbs: dbs, url: arg});
         event.sender.send('databases_streaming', dbs);
