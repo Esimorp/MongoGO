@@ -7,7 +7,7 @@ import DataContainer from "../components/Data/DataContainer";
 const Routes = ({history}) =>
     <Router history={history}>
         <Route path="/" component={App}>
-            <Route path="explore/:database/:collection/:view" component={DataContainer}/>
+            <Route path="explore/:collection/:view" component={DataContainer}/>
         </Route>
         <Route path="/completed" component={App}/>
         <Route path="*" component={NotFound}/>

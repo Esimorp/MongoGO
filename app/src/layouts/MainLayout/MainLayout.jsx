@@ -11,7 +11,8 @@ const MainLayout = ({children}) => {
             <Row style={{height: '100vh'}}>
                 <Col span={4}>
                     <Left_Nav></Left_Nav>
-                    <Link to="/kcyp/tree" onlyActiveOnIndex={true}>Data</Link>
+                    <Link to="/explore/alskdjalsd/asdasd" onlyActiveOnIndex={true}>Data</Link>
+                    <Link to="/explore/asdad/asd" onlyActiveOnIndex={true}>DataDDD</Link>
                 </Col>
                 <Col span={20} className={styles.normal}>
                     <Query></Query>

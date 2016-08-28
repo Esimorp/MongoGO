@@ -10,7 +10,23 @@ class DataContainer extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.state = {tabs: ['1', '2', '3']}
+        this.state = {collections: {}}
+    }
+
+    componentDidMount() {
+        let collections = {};
+        collections[this.props.params.collection] = {view: 'json'};
+        this.setState({...this.state, collections: collections});
+    }
+
+    componentWillReceiveProps(newProps) {
+        console.log('componentWillReceiveProps');
+        console.log(this.props.params.collection);
+        if (!this.state.collections[newProps.params.collection]) {
+            let collections = {...this.state.collections};
+            collections[newProps.params.collection] = {view: 'json'};
+            this.setState({...this.state, collections: collections});
+        }
     }
 
     callback(key) {
@@ -18,12 +34,14 @@ class DataContainer extends React.Component {
     }
 
     render() {
+        let collections = [];
+
+        for (let collectionName in this.state.collections) {
+            collections.push(<TabPane tab={collectionName} key={collectionName}>content</TabPane>)
+        }
         return (
             <Tabs defaultActiveKey="1" onChange={this.callback}>
-                {this.state.tabs.map((i, m)=> {
-                        return <TabPane tab="选项卡一" key={i}>选项卡一内容</TabPane>
-                    }
-                )}
+                {collections}
             </Tabs>)
     }
 }
